@@ -89,3 +89,18 @@ services:
       - fleetdm
     ports:
       - "8080:8080"
+  #######################################
+  # LETSENCRYPT
+  #######################################
+  letsencrypt:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: ./services/letsencrypt/Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./secrets:/secrets
+    networks:
+      - fleetdm
